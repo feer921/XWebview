@@ -1,0 +1,32 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fee.TheXWebview">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--  下面这个 权限的声明比较隐私，如果APP不需要，可以在 项目清单中 remove掉   -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <application
+        >
+
+        <service
+            android:name="com.fee.xwebview.core.x5.X5LoadService"
+            android:process=":X5">
+        </service>
+
+        <service android:name="com.fee.xwebview.core.x5.ReceiveX5ResultService"/>
+
+        <!--
+            TBS内核首次使用和加载时，ART虚拟机会将Dex文件转为Oat，该过程由系统底层触发且耗时较长，很容易引起anr问题，
+            解决方法是使用TBS的 ”dex2oat优化方案“
+            该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。
+        -->
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":X5" >
+        </service>
+    </application>
+</manifest>

@@ -30,6 +30,8 @@ class X5LoadService : Service(), PreInitCallback {
     private var isCanDownloadX6WithoutWifi = true
 
     private var isNeedBroadcastInitResult = false
+
+    private var isCanDoInitWork = true
     override fun onCreate() {
         super.onCreate()
         L.e(TAG, "--> onCreate()")
@@ -42,21 +44,31 @@ class X5LoadService : Service(), PreInitCallback {
             TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE to true
         )
         QbSdk.initTbsSettings(configMap)
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        L.e(TAG, "--> onStartCommand() intent = $intent, flags = $flags, startId = $startId")
+        L.e(
+            TAG,
+            "--> onStartCommand() intent = $intent, flags = $flags, startId = $startId, isCanDoInitWork = $isCanDoInitWork"
+        )
+        handleIntent(intent)
+        return START_NOT_STICKY
+    }
+
+    private fun handleIntent(intent: Intent?) {
         intent?.let {
             isNeedBroadcastInitResult =
                 it.getBooleanExtra(XWebViewHelper.INTENT_KEY_NEED_BROADCAST_INIT_RESULT, false)
             isCanDownloadX6WithoutWifi =
                 it.getBooleanExtra(XWebViewHelper.INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI, true)
+            if (isCanDoInitWork) {
+                initX5Module()
+            }
         }
-        initX5Module()
-        return START_NOT_STICKY
     }
-
     private fun initX5Module() {
+        isCanDoInitWork = false
         initX5Times++ //自动调多次初始化，不回调结果??
         QbSdk.setDownloadWithoutWifi(isCanDownloadX6WithoutWifi)//非 Wifi情况下
         try {
@@ -78,6 +90,7 @@ class X5LoadService : Service(), PreInitCallback {
     }
 
     override fun onViewInitFinished(isInitOk: Boolean) {//call back step 2
+        isCanDoInitWork = true
         val x5MinVer = QbSdk.getMiniQBVersion(applicationContext)
         //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
         L.e(

@@ -1,5 +1,12 @@
 package com.fee.xwebview
 
+import android.content.Context
+import android.content.Intent
+import android.webkit.WebView
+import com.fee.TheXWebview.BuildConfig
+import com.fee.xwebview.core.x5.X5LoadService
+import com.fee.xwebview.views.IWebview
+
 /**
  * ******************(^_^)***********************<br>
  * User: fee(QQ/WeiXin:1176610771)<br>
@@ -27,6 +34,43 @@ object XWebViewHelper {
         this.isX5InitOk = isX5InitOk
     }
 
+    fun initWebViewService(context: Context,needBroadcastInitResult: Boolean = false,canInitX5WithoutWifi: Boolean = true) {
+        val intent: Intent = Intent(context, X5LoadService::class.java)
+        intent.putExtra(INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI,canInitX5WithoutWifi)
+            .putExtra(INTENT_KEY_NEED_BROADCAST_INIT_RESULT,needBroadcastInitResult)
+        context.startService(intent)
+    }
+
+
+    /**
+     * 较通用的配置 WebView
+     */
+    fun commonConfigWebViewSettings(theWebView: IWebview) {
+        theWebView.getWebSettings(false)?.apply {
+            setAppCacheEnabled(true)
+            allowContentAccess = true
+            javaScriptEnabled = true
+            setSupportZoom(false)
+            useWideViewPort = true//设置此属性，可任意比例缩放 设置webview推荐使用的窗口
+            domStorageEnabled = true
+            loadWithOverviewMode = true
+            javaScriptCanOpenWindowsAutomatically = true
+            allowFileAccess = true
+            setAllowFileAccessFromFileURLs(true)
+            setSupportMultipleWindows(true)
+            setPluginsEnabled(true)
+            savePassword = false
+            textZoom = 100
+            mediaPlaybackRequiresUserGesture = false
+            if (Api.isApiCompatible(21)) {
+                mixedContentMode = 0//允许加载H5网页时，https/http混合使用
+            }
+            displayZoomControls = false//一般不需要 网页上显示 缩放按钮
+        }
+        if (BuildConfig.DEBUG) {
+            WebView.setWebContentsDebuggingEnabled(true)//在 debug输出包时，把 Chrome 浏览器可调试功能开启
+        }
+    }
 
 
 

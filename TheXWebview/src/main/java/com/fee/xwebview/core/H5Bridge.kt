@@ -1,6 +1,7 @@
 package com.fee.xwebview.core
 
 import android.webkit.JavascriptInterface
+import androidx.annotation.WorkerThread
 import java.lang.ref.WeakReference
 
 /**
@@ -25,6 +26,7 @@ open class H5Bridge(theH5ThinkImp: IH5Think?) {
      * JS 调用原生的 桥梁方法，JS调用参考：
      * window.android(接口映射名,该名称为使用者给JS注入Java的接口映射时所指定).jsReqNativeDo("{'key1':'value1'}")
      */
+    @WorkerThread
     @JavascriptInterface
     open fun jsReqNativeDo(reqJsonData: String) {
         try {

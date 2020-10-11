@@ -24,6 +24,7 @@ internal class ReceiveX5ResultService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        L.e("ReceiveX5ResultService", "--> onStartCommand() intent = $intent, startId = $startId")
         intent?.let {
             if (it.hasExtra(XWebViewHelper.INTENT_KEY_INIT_X5_RESLUT)) {
                 val isX5InitOk = it.getBooleanExtra(XWebViewHelper.INTENT_KEY_INIT_X5_RESLUT, false)

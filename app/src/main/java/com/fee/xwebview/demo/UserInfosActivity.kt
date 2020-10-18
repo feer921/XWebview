@@ -1,10 +1,10 @@
-package com.fee.xwebview
+package com.fee.xwebview.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.fee.xwebview.databinding.ActivityUserinfoBinding
-import com.fee.xwebview.viewModels.UserViewModel
+import com.fee.xwebview.demo.databinding.ActivityUserinfoBinding
+import com.fee.xwebview.demo.viewModels.UserViewModel
 
 /**
  * ******************(^_^)***********************<br>

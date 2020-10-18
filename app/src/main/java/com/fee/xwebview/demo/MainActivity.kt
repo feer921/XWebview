@@ -1,4 +1,4 @@
-package com.fee.xwebview
+package com.fee.xwebview.demo
 
 import android.os.Bundle
 import android.view.Menu

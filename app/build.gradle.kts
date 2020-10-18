@@ -7,7 +7,7 @@ plugins{
 android{
     compileSdkVersion(29)
     defaultConfig{
-        applicationId = "com.fee.xwebview"
+        applicationId = "com.fee.xwebview.demo"
         minSdkVersion(19)
         targetSdkVersion(29)
         versionCode = 1

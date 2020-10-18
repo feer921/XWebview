@@ -1,6 +1,7 @@
-package com.fee.xwebview
+package com.fee.xwebview.demo
 
 import android.app.Application
+import com.fee.xwebview.XWebViewHelper
 
 /**
  * ******************(^_^)***********************<br>

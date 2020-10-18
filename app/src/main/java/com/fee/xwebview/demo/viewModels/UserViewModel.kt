@@ -1,9 +1,8 @@
-package com.fee.xwebview.viewModels
+package com.fee.xwebview.demo.viewModels
 
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fee.xwebview.datas.User
+import com.fee.xwebview.demo.datas.User
 
 /**
  * ******************(^_^)***********************<br>

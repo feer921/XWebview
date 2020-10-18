@@ -1,4 +1,4 @@
-package com.fee.xwebview.ui.slideshow
+package com.fee.xwebview.demo.ui.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

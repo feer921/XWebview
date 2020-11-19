@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我是标题啊"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:minHeight="10dp"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+<!--
+    scroll|enterAlways 向下滚动时，AppBarLayout 行显示，显示完全，再滚动 NestedScrollView
+-->
+<!--
+    scroll|enterAlways|enterAlwaysCollapsed [收缩的]
+    进入时 先进入最小高度的距离，然后 滚动 NestedScrollView至完全后，再 AppBarLayout滚动至完全
+-->
+
+<!--
+   scroll|exitUntilCollapsed: 定义是消失的规则：向上滚动时，AppBarLayout 先滚动到 子View最小高度，并不完全消失，然后滚动
+   ScrollView，
+   -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+<!--           app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    等价:
+app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+      -->
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:gravity="center_horizontal"/>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

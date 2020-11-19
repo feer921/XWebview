@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        //显示NavigationIcon,这个方法是ActionBar的方法.Toolbar没有这个方法.
+//        supportActionBar?.setDisplayHomeAsUpEnabled(false);
+//        toolbar.setNavigationIcon(R.drawable.ic_menu_camera)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

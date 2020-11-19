@@ -2,6 +2,7 @@
     package="com.fee.TheXWebview">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,6 +10,7 @@
     <!--  下面这个 权限的声明比较隐私，如果APP不需要，可以在 项目清单中 remove掉   -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
+        android:requestLegacyExternalStorage="true"
         >
 
         <service
@@ -28,5 +30,18 @@
             android:label="dexopt"
             android:process=":X5" >
         </service>
+
+        <!-- X5 TBS 自带的 视频播放器 -->
+        <activity
+            android:name="com.tencent.smtt.sdk.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true">
+            <intent-filter>
+                <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

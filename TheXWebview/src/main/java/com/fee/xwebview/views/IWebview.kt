@@ -323,4 +323,5 @@ interface IWebview {
     fun pictureOfWebview(): Picture?
 
     fun getProgress(): Int
+    fun isSrcWebView(): Boolean
 }

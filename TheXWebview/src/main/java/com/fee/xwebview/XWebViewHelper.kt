@@ -34,6 +34,9 @@ object XWebViewHelper {
         this.isX5InitOk = isX5InitOk
     }
 
+    fun isX5InitOk():Boolean {
+        return this.isX5InitOk
+    }
     fun initWebViewService(context: Context,needBroadcastInitResult: Boolean = false,canInitX5WithoutWifi: Boolean = true) {
         val intent: Intent = Intent(context, X5LoadService::class.java)
         intent.putExtra(INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI,canInitX5WithoutWifi)
@@ -72,9 +75,31 @@ object XWebViewHelper {
         }
     }
 
-
-
-
+    /**
+     * 根据 JS的方法名称以及所传的 方法参数，组装一条 WebView执行的 JS的方法信息
+     * @param justJsMethodName .: "callJsMethod"
+     * @param jsMethodParams JS内方法所需要传入的参数; .: '10',''
+     * @return .: "callJsMethod('10',true,'man')"
+     */
+    fun assembleJsMethodInfos(justJsMethodName: String, vararg jsMethodParams: Any?): String {
+        if (!justJsMethodName.isBlank()) {
+            val sb: StringBuilder = StringBuilder("$justJsMethodName(")
+            val paramLen = jsMethodParams.size
+            jsMethodParams.forEachIndexed { index, aParam ->
+                var paramValue: Any = ""
+                if (aParam != null) {
+                    paramValue = aParam
+                }
+                sb.append("'$paramValue'")
+                if (index != paramLen - 1) {
+                    sb.append(",")
+                }
+            }
+            sb.append(")")
+            return sb.toString()
+        }
+        return ""
+    }
 
 
 

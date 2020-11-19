@@ -195,6 +195,9 @@ class ASrcWebView(context: Context, attrs: AttributeSet?) : WebView(
         return capturePicture()
     }
 
+    override fun isSrcWebView(): Boolean {
+        return true
+    }
 
 
 }

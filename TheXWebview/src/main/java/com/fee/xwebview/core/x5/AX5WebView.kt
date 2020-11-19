@@ -148,7 +148,7 @@ class AX5WebView(context: Context, attributeSet: AttributeSet?, defStyle: Int) :
     private fun initPaint() {
         if (mPaintX5Info == null) {
             mPaintX5Info = Paint()
-            mPaintX5Info?.color = 0x7fff0000
+            mPaintX5Info?.color = 0x7FFF0000.toInt()
             mPaintX5Info?.textSize = 24f
             mPaintX5Info?.isAntiAlias = true
         }
@@ -161,6 +161,7 @@ class AX5WebView(context: Context, attributeSet: AttributeSet?, defStyle: Int) :
         val ret = super.drawChild(canvas, child, drawingTime)
         canvas.save()
         initPaint()
+        L.e(TAG,"--> drawChild() ..................")
         if (x5WebViewExtension != null) {
             canvas.drawText(
                 this.context.packageName + "-pid:"
@@ -226,4 +227,7 @@ class AX5WebView(context: Context, attributeSet: AttributeSet?, defStyle: Int) :
         return capturePicture()
     }
 
+    override fun isSrcWebView(): Boolean {
+        return false
+    }
 }

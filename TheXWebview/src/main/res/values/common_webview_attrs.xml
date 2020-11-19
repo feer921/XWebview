@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonWebView">
+        <!-- 具体要使用的WebView类型   -->
+        <attr name="webViewType" format="enum">
+            <enum name="X5" value="10">"X5"</enum>
+            <enum name="SrcWebview" value="11">"SrcWebview"</enum>
+        </attr>
+        <!--  Xml属性设置默认加载的 url      -->
+        <attr name="webViewUrl" format="string" />
+        <!-- WebView 延迟初始化时间，单位：秒  -->
+        <attr name="webViewDelayInitTime" format="integer" />
+    </declare-styleable>
+</resources>

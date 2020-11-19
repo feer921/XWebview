@@ -1,6 +1,7 @@
 package com.fee.xwebview.demo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.fee.xwebview.XWebViewHelper
@@ -24,8 +25,24 @@ class BrowseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_browse)
         dataBinding.commonWebview
-        .loadUrl("www.baidu.com"){
+        .loadUrl(
+            "http://www.doubiekan.net/"
+//            "https://www.baidu.com"
+        ){
             XWebViewHelper.commonConfigWebViewSettings(this)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dataBinding.commonWebview.release(true, isWillDestroy = true)
+    }
+
+    override fun onBackPressed() {
+        val isCanGobackBrowse = dataBinding.commonWebview.onBackBrowse()
+        if (isCanGobackBrowse) {
+            return
+        }
+        super.onBackPressed()
     }
 }

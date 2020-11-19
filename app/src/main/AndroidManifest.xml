@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".App"
+        android:requestLegacyExternalStorage="true"
         >
         <activity
             android:name=".MainActivity"
@@ -26,6 +27,8 @@
             >
 
         </activity>
+        <activity android:name=".TestCoordinatorLayoutAct" />
+        <activity android:name=".TestBehaviorActivity" />
     </application>
 
 </manifest>

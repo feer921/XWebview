@@ -18,7 +18,6 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
     //-------------- @[IWebViewClient] interface methods @start---------------------
 //    override fun shouldOverrideUrlLoading(url: String?): Boolean {
 //    }
-
     /**
      * 用来代替 标志为过时的[shouldOverrideUrlLoading]
      * @param request

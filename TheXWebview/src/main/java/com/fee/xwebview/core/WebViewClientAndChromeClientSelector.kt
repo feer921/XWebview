@@ -17,8 +17,8 @@ import com.fee.xwebview.core.x5.AX5WebViewClient
  * ******************(^_^)***********************
  */
 open class WebViewClientAndChromeClientSelector(
-    private val webViewClientType: Int, webviewClientImp: IWebViewClient?,
-    webviewChromeClientImp: IWebChromeClient?
+    private val webViewClientType: Int, private val webviewClientImp: IWebViewClient?,
+   private val webviewChromeClientImp: IWebChromeClient?
 ) {
     private var ax5WebViewClient: AX5WebViewClient? = null
 
@@ -27,6 +27,13 @@ open class WebViewClientAndChromeClientSelector(
     private var srcWebViewClient: ASrcWebViewClient? = null
 
     private var srcWebChromeClient: ASrcWebChromeClient? = null
+
+    /**
+     * 是否设置成: 本类 可兼容 即提供 X5的 [AX5WebViewClient] 和 [AX5WebChromeClient] 也可以提供 原生WebView的 [ASrcWebViewClient]和[ASrcWebChromeClient]
+     * 而不用去重新创建本类的实例
+     * def:false
+     */
+    var isFullCompatAllClients: Boolean = false
 
     init {
         when (webViewClientType) {
@@ -78,18 +85,34 @@ open class WebViewClientAndChromeClientSelector(
     }
 
     open fun getX5WebViewClient(): AX5WebViewClient? {
+        if (ax5WebViewClient == null && isFullCompatAllClients) {
+            ax5WebViewClient = AX5WebViewClient()
+            ax5WebViewClient?.setWebViewClientListener(webviewClientImp)
+        }
         return ax5WebViewClient
     }
 
     open fun getX5WebChromeClient(): AX5WebChromeClient? {
+        if (ax5WebChromeClient == null && isFullCompatAllClients) {
+            ax5WebChromeClient = AX5WebChromeClient()
+            ax5WebChromeClient?.setWebChromeClientListener(webviewChromeClientImp)
+        }
         return ax5WebChromeClient
     }
 
     open fun getSrcWebViewClient(): ASrcWebViewClient? {
+        if (srcWebViewClient == null && isFullCompatAllClients) {
+            srcWebViewClient = ASrcWebViewClient()
+            srcWebViewClient?.setWebViewClientListener(webviewClientImp)
+        }
         return srcWebViewClient
     }
 
     open fun getSrcWebChromeClient(): ASrcWebChromeClient? {
+        if (srcWebChromeClient == null && isFullCompatAllClients) {
+            srcWebChromeClient = ASrcWebChromeClient()
+            srcWebChromeClient?.setChromeClientListener(webviewChromeClientImp)
+        }
         return srcWebChromeClient
     }
 

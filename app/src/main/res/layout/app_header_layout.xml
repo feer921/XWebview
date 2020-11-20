@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/ivBtnHeaderBack"
+        android:src="@mipmap/ic_back_48x48"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ivBtnHeaderBack"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="我是标题"
+        android:layout_marginStart="15dp"
+        android:textColor="#333"
+        android:textSize="16sp"
+        android:id="@+id/tvHeaderTitle"
+        android:ellipsize="end"
+        android:maxWidth="200dp"
+        />
+
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toStartOf="@id/ivBtnHeaderRefresh"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@mipmap/ic_close_48x48"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/ivBtnHeaderClose"
+        />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_refresh_48x48"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/ivBtnHeaderRefresh"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

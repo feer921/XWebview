@@ -18,17 +18,24 @@ open class DefLoadingHandle(protected val context: Context) : ILoadingHandle {
 
     init {
         if (progressBar == null) {
-            progressBar = ProgressBar(context)
+//            progressBar = ProgressBar(context,null,0, R.style.Widget_AppCompat_ProgressBar_Horizontal) API 21
+            // https://blog.csdn.net/wzy_1988/article/details/49619773 defStyleAttr 参数
+            //通过构造方法的第三个参数来指定 ProgressBar 的样式(但该样式依赖于当前View所处的Activity的 theme > App整体的theme)
+            progressBar = ProgressBar(context,null,android.R.attr.progressBarStyleHorizontal)
         }
         progressBar?.max = 100
         progressBar?.isIndeterminate = false
-
     }
+
     fun configProgressBar(configBlock: ProgressBar.() -> Unit) {
         progressBar?.let {
             it.max = 100
             it.configBlock()// custom your configs
         }
+    }
+
+    fun configOutSideProgressBar(progressBar: ProgressBar) {
+        this.progressBar = progressBar
     }
     /**
      * 实现类来提供 一个用来 显示正在加载 webview或者其他 的View

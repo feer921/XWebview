@@ -50,8 +50,9 @@ open class CommonWebView : LinearLayout {
     /**
      * 是否使能 WebView的回退浏览
      */
-    protected var isEnableBackBrowse = false
+    var isEnableBackBrowse = false
 
+    var isNeedDefConfigWebView = true
     /**
      * 当前的 具体类型 WebView，本类会根据SDK初始化情况，优先使用 X5 WebView，可切换
      */
@@ -163,7 +164,7 @@ open class CommonWebView : LinearLayout {
      * 在加载 相关的 [webViewUrl]前，可以先在[configBlock]进行 设置 WebView相关参数
      */
     fun loadUrl(webViewUrl: String?, configBlock: IWebview.() -> Unit) {
-        L.e(TAG, "--> loadUrl() theWebView = $theWebView , webViewUrl = $webViewUrl")
+        L.d(TAG, "--> loadUrl() theWebView = $theWebView , webViewUrl = $webViewUrl")
         if (!webViewUrl.isNullOrBlank()) {
             this.theHostUrl = webViewUrl
             theWebView?.let {
@@ -412,6 +413,11 @@ open class CommonWebView : LinearLayout {
                 }
             }
             if (isNeedInitLoad) {
+                if (isNeedDefConfigWebView) {
+                    if (theWebView != null) {
+                        XWebViewHelper.commonConfigWebViewSettings(theWebView!!)
+                    }
+                }
                 loadUrl(theHostUrl)
             }
         }

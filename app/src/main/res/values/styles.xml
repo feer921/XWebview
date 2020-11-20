@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--  让该自定义属性 配置在 AppTheme主题下      -->
+        <item name="myHorizontalProgressBarAttrs">@style/myHorizontalProgressBarStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,4 +18,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <attr name="myHorizontalProgressBarAttrs" format="reference" />
+    <style name="myHorizontalProgressBarStyle" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:maxHeight">2dp</item>
+        <item name="android:minHeight">2dp</item>
+        <item name="android:max">100</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:progressDrawable">@drawable/progressbar_style_light_green_progress</item>
+    </style>
 </resources>

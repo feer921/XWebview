@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+        homeViewModel._text.value = "打开浏览器"
         return root
     }
 }

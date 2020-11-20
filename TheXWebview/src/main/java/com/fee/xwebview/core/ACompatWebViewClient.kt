@@ -15,6 +15,8 @@ import android.webkit.ValueCallback
  * ******************(^_^)***********************
  */
 abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
+    private var outSideCompatWebViewClient: ACompatWebViewClient? = null
+
     //-------------- @[IWebViewClient] interface methods @start---------------------
 //    override fun shouldOverrideUrlLoading(url: String?): Boolean {
 //    }
@@ -31,6 +33,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
     }
 
     override fun onPageStarted(url: String?, favicon: Bitmap?) {
+
     }
 
 //    override fun onPageFinished(url: String?) {

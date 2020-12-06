@@ -2,6 +2,8 @@ package com.fee.xwebview.core
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.ValueCallback
 
 /**
@@ -208,6 +210,20 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
         capture: String?
     ): Boolean {
         return false
+    }
+
+    /**
+     * 对应   WebChromeClient#onShowCustomView(View, WebChromeClient.CustomViewCallback)
+     * 回调的处理
+     * H5 中请求宿主需要进行全屏显示
+     * @param view eg.: 而全屏的视频会在其参数View view中进行渲染
+     * @return 处理者返回一个可以 添加 @param view 的容器View
+     */
+    override fun handleOnShowCustomView(view: View?): ViewGroup? {
+        return null
+    }
+
+    override fun onHideCustomView() {
     }
 
     //-------------- @[IWebChromeClient] interface methods @end---------------------

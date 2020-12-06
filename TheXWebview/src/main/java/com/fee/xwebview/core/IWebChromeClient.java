@@ -2,6 +2,8 @@ package com.fee.xwebview.core;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 
@@ -108,4 +110,14 @@ public interface IWebChromeClient {
      *                   associated with this file picker.
      */
     boolean onShowOpenFileChooser(ValueCallback<Uri[]> uploadFile, String[] acceptType, String capture);
+
+    /**
+     * 对应   WebChromeClient#onShowCustomView(View, WebChromeClient.CustomViewCallback)
+     * 回调的处理
+     * H5 中请求宿主需要进行全屏显示
+     * @param view eg.: 而全屏的视频会在其参数View view中进行渲染
+     * @return 处理者返回一个可以 添加 @param view 的容器View
+     */
+    ViewGroup handleOnShowCustomView(View view);
+    void onHideCustomView();
 }

@@ -2,6 +2,8 @@ package com.fee.xwebview.core.src
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.*
 import com.fee.xwebview.core.IWebChromeClient
 
@@ -189,5 +191,54 @@ open class ASrcWebChromeClient : WebChromeClient() {
             return chromeClient!!.onShowOpenFileChooser(filePathCallback, acceptTypes, "")
         }
         return super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
+    }
+
+    //因为 原生WebView 如果有视频播放时点击需要 全屏播放，则需要实现该方法(如果不重写，H5的video标签的控制器的按钮为灰色)
+    private var mCustomViewFromH5: View? = null
+    private var callback: CustomViewCallback? = null
+    private var customViewContainer: ViewGroup? = null
+
+    /**
+     *  H5内 <video>标签 的控制 点击时回调
+     */
+    override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
+        super.onShowCustomView(view, callback)
+        customViewContainer = chromeClient?.handleOnShowCustomView(view)
+        if (customViewContainer == null) {
+            //外部不处理的情况下，就都不处理了
+            return
+        }
+        if (mCustomViewFromH5 != null) {
+            callback?.onCustomViewHidden()
+            return
+        }
+        mCustomViewFromH5 = view
+        mCustomViewFromH5?.visibility = View.VISIBLE
+        this.callback = callback
+        customViewContainer?.let {
+            if (mCustomViewFromH5?.parent == null) {
+                it.addView(mCustomViewFromH5)
+            }
+            it.visibility = View.VISIBLE
+            it.bringToFront()
+        }
+    }
+
+    override fun onHideCustomView() {
+        super.onHideCustomView()
+        if (mCustomViewFromH5 == null) {
+            return
+        }
+        mCustomViewFromH5?.visibility = View.GONE
+        customViewContainer?.let {
+            it.removeView(mCustomViewFromH5)
+            it.visibility = View.GONE
+        }
+        mCustomViewFromH5 = null
+        try {
+            callback?.onCustomViewHidden()
+        } catch (ex: Exception) {
+        }
+        chromeClient?.onHideCustomView()//一般需要外部 恢复 屏幕方向
     }
 }

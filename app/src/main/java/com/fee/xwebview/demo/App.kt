@@ -1,6 +1,7 @@
 package com.fee.xwebview.demo
 
 import android.app.Application
+import android.util.Log
 import com.fee.xwebview.XWebViewHelper
 
 /**
@@ -14,6 +15,7 @@ import com.fee.xwebview.XWebViewHelper
  */
 class App : Application() {
     override fun onCreate() {
+        Log.e("App"," --> onCreate()")
         super.onCreate()
         XWebViewHelper.initWebViewService(this)
     }

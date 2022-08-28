@@ -17,7 +17,7 @@ import android.webkit.ValueCallback
  * ******************(^_^)***********************
  */
 abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
-    private var outSideCompatWebViewClient: ACompatWebViewClient? = null
+    var mOutSideCompatWebViewClient: ACompatWebViewClient? = null
 
     //-------------- @[IWebViewClient] interface methods @start---------------------
 //    override fun shouldOverrideUrlLoading(url: String?): Boolean {
@@ -35,13 +35,14 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
     }
 
     override fun onPageStarted(url: String?, favicon: Bitmap?) {
-
+        mOutSideCompatWebViewClient?.onPageStarted(url,favicon)
     }
 
 //    override fun onPageFinished(url: String?) {
 //    }
 
     override fun onLoadResource(url: String?) {
+        mOutSideCompatWebViewClient?.onLoadResource(url)
     }
 
     /**
@@ -52,7 +53,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
      * @return [CommonWebResourceRsp]
      */
     override fun shouldInterceptRequest(request: CommonWebResourceRequest?): CommonWebResourceRsp? {
-        return null
+        return mOutSideCompatWebViewClient?.shouldInterceptRequest(request)
     }
 
 //    /**
@@ -87,16 +88,19 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
         request: CommonWebResourceRequest?,
         errorResponse: CommonWebResourceRsp?
     ) {
+        mOutSideCompatWebViewClient?.onReceivedHttpError(request,errorResponse)
     }
 
     override fun onReceivedSslError() {
+        mOutSideCompatWebViewClient?.onReceivedSslError()
     }
 
     override fun onScaleChanged(oldScale: Float, newScale: Float) {
+        mOutSideCompatWebViewClient?.onScaleChanged(oldScale,newScale)
     }
 
     override fun onReceivedLoginRequest(realm: String?, account: String?, args: String?) {
-
+        mOutSideCompatWebViewClient?.onReceivedLoginRequest(realm,account,args)
     }
 
     /**
@@ -106,6 +110,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
      * @param code
      */
     override fun onDetectedBlankScreen(url: String?, code: Int) {
+        mOutSideCompatWebViewClient?.onDetectedBlankScreen(url,code)
     }
 
     //-------------- @[IWebViewClient] interface methods @end---------------------
@@ -142,6 +147,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
      * @param icon A Bitmap containing the favicon for the current page.
      */
     override fun onReceivedIcon(icon: Bitmap?) {
+        mOutSideCompatWebViewClient?.onReceivedIcon(icon)
     }
 
     /**
@@ -163,7 +169,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
         message: String?,
         defaultValue: String?
     ): Boolean {
-        return false
+        return mOutSideCompatWebViewClient?.onJsCase(jsShowCase, url, message, defaultValue) ?: false
     }
 
     /**
@@ -174,7 +180,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
      * @return true if the message is handled by the client.
      */
     override fun onConsoleMessage(message: String?): Boolean {
-        return false
+        return mOutSideCompatWebViewClient?.onConsoleMessage(message) ?: false
     }
 
     /**
@@ -192,6 +198,7 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
         acceptType: String?,
         capture: String?
     ) {
+        mOutSideCompatWebViewClient?.openFileChooser(uploadFile,acceptType,capture)
     }
 
     /**
@@ -209,7 +216,8 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
         acceptType: Array<out String>?,
         capture: String?
     ): Boolean {
-        return false
+        return mOutSideCompatWebViewClient?.onShowOpenFileChooser(uploadFile, acceptType, capture)
+            ?: false
     }
 
     /**
@@ -220,10 +228,11 @@ abstract class ACompatWebViewClient : IWebViewClient,IWebChromeClient{
      * @return 处理者返回一个可以 添加 @param view 的容器View
      */
     override fun handleOnShowCustomView(view: View?): ViewGroup? {
-        return null
+        return mOutSideCompatWebViewClient?.handleOnShowCustomView(view)
     }
 
     override fun onHideCustomView() {
+        mOutSideCompatWebViewClient?.onHideCustomView()
     }
 
     //-------------- @[IWebChromeClient] interface methods @end---------------------

@@ -36,7 +36,7 @@ interface IWebview {
      * controlling caching, accept types or the User-Agent, their
      * values may be overridden by this WebView's defaults.
      */
-    fun loadUrl(url: String, additionalHttpHeaders: Map<String?, String?>?)
+    fun loadUrl(url: String, additionalHttpHeaders: Map<String?, String?>)
 
     /**
      * Loads the URL with postData using "POST" method into this WebView. If url
@@ -47,13 +47,13 @@ interface IWebview {
      * @param postData the data will be passed to "POST" request, which must be
      * be "application/x-www-form-urlencoded" encoded.
      */
-    fun postUrl(url: String, postData: ByteArray?)
+    fun postUrl(url: String, postData: ByteArray)
 
-    fun loadData(data: String?, mimeType: String?, encoding: String?)
+    fun loadData(data: String, mimeType: String?, encoding: String?)
 
     fun loadDataWithBaseURL(
         baseUrl: String?,
-        data: String?,
+        data: String,
         mimeType: String?,
         encoding: String?,
         historyUrl: String?
@@ -79,7 +79,7 @@ interface IWebview {
      * completes with the result of the execution (if any).
      * May be null if no notification of the result is required.
      */
-    fun evaluateJavascript(script: String?, resultCallback: CommonValueCallback<String?>?)
+    fun evaluateJavascript(script: String, resultCallback: CommonValueCallback<String?>?)
 
     /**
      * Gets the URL for the current page. This is not always the same as the URL
@@ -88,7 +88,7 @@ interface IWebview {
      *
      * @return the URL for the current page
      */
-    fun getUrl(): String
+    fun getUrl(): String?
 
     /**
      * Gets the height of the HTML content.
@@ -109,7 +109,7 @@ interface IWebview {
      *
      * @param filename the filename where the archive should be placed
      */
-    fun saveWebArchive(filename: String?)
+    fun saveWebArchive(filename: String)
 
     /**
      * 停止加载
@@ -242,7 +242,7 @@ interface IWebview {
      * @param object Java对象
      * @param jsInterfaceName 与前端约定的js调用的名称
      */
-    fun addJavascriptInterface(jsBridgeObj: Any, jsInterfaceName: String?)
+    fun addJavascriptInterface(jsBridgeObj: Any, jsInterfaceName: String)
 
 
     /**
@@ -318,7 +318,7 @@ interface IWebview {
      * @param height 要截取的高
      * @param canvas 绘制到的目标画布
      */
-    fun captureWithConfigs(width: Int, height: Int, canvas: Canvas?)
+    fun captureWithConfigs(width: Int, height: Int, canvas: Canvas)
 
     fun pictureOfWebview(): Picture?
 

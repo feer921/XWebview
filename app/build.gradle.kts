@@ -5,11 +5,14 @@ plugins{
 }
 
 android{
-    compileSdkVersion(29)
+    //Dependency 'androidx.core:core-ktx:1.7.0' requires libraries and applications that
+    //      depend on it to compile against version 31 or later of the
+    //      Android APIs.
+    compileSdk = 31 // Android 12.0
     defaultConfig{
         applicationId = "com.fee.xwebview.demo"
-        minSdkVersion(19)
-        targetSdkVersion(29)
+        minSdk = 19
+        targetSdk = 29
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -18,7 +21,7 @@ android{
 //        }
     }
     buildFeatures{
-        dataBinding = true
+        viewBinding = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -39,18 +42,18 @@ dependencies {
         )
     )
     implementation(project(mapOf("path" to ":TheXWebview")))
-    implementation( "org.jetbrains.kotlin:kotlin-stdlib:1.4.21")
-    implementation( "androidx.core:core-ktx:1.3.2")
-    implementation ("androidx.appcompat:appcompat:1.2.0")
-    implementation ("com.google.android.material:material:1.2.1")
+    implementation( "org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
+    implementation( "androidx.core:core-ktx:1.7.0")
+    implementation ("androidx.appcompat:appcompat:1.3.1")
+    implementation ("com.google.android.material:material:1.4.0")
     implementation ("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation ("androidx.navigation:navigation-fragment:2.3.2")
-    implementation ("androidx.navigation:navigation-ui:2.3.2")
+    implementation ("androidx.navigation:navigation-fragment:2.3.5")
+    implementation ("androidx.navigation:navigation-ui:2.3.5")
 //    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")//已经过时了
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.3.2")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.3.2")
-    testImplementation ("junit:junit:4.13.1")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.3.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
+    testImplementation ("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
     implementation("org.tensorflow:tensorflow-lite:2.4.0")
 }

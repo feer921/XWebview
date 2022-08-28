@@ -119,5 +119,9 @@ public interface IWebChromeClient {
      * @return 处理者返回一个可以 添加 @param view 的容器View
      */
     ViewGroup handleOnShowCustomView(View view);
+
+    /**
+     * 隐藏 CustomView 的回调
+     */
     void onHideCustomView();
 }

@@ -11,12 +11,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import com.fee.TheXWebview.BuildConfig
 import com.fee.xwebview.L
 import com.fee.xwebview.core.CommonValueCallback
 import com.fee.xwebview.core.WebSettingsWrapper
 import com.fee.xwebview.core.WebViewClientAndChromeClientSelector
 import com.fee.xwebview.views.IWebview
-import com.tencent.smtt.sdk.BuildConfig
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.WebView
 
@@ -60,7 +60,7 @@ class AX5WebView(context: Context, attributeSet: AttributeSet?, defStyle: Int) :
      * completes with the result of the execution (if any).
      */
     override fun evaluateJavascript(
-        script: String?,
+        script: String,
         resultCallback: CommonValueCallback<String?>?
     ) {
         super.evaluateJavascript(script, resultCallback)
@@ -217,7 +217,7 @@ class AX5WebView(context: Context, attributeSet: AttributeSet?, defStyle: Int) :
      * @param height 要截取的高
      * @param canvas 绘制到的目标画布
      */
-    override fun captureWithConfigs(width: Int, height: Int, canvas: Canvas?) {
+    override fun captureWithConfigs(width: Int, height: Int, canvas: Canvas) {
         val snapShot = capturePicture()
         snapShot.beginRecording(width, height)
         snapShot.draw(canvas)
@@ -230,4 +230,6 @@ class AX5WebView(context: Context, attributeSet: AttributeSet?, defStyle: Int) :
     override fun isSrcWebView(): Boolean {
         return false
     }
+
+
 }

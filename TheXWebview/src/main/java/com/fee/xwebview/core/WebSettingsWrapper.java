@@ -822,9 +822,13 @@ public class WebSettingsWrapper {
     }
 
     public WebSettingsWrapper setPluginsEnabled(boolean flag) {
-//        if (srcWebSettings != null) {
-//            srcWebSettings.setPluginsEnabled(flag);
-//        }
+        if (srcWebSettings != null) {
+            if (flag) {
+                srcWebSettings.setPluginState(android.webkit.WebSettings.PluginState.ON);
+            } else  {
+                srcWebSettings.setPluginState(android.webkit.WebSettings.PluginState.OFF);
+            }
+        }
         if (x5WebSettings != null) {
             x5WebSettings.setPluginsEnabled(flag);
         }

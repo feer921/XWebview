@@ -56,7 +56,7 @@ class ASrcWebView(context: Context, attrs: AttributeSet?) : WebView(
      * @param resultCallback A callback to be invoked when the script execution
      * completes with the result of the execution (if any).
      */
-    override fun evaluateJavascript(script: String?, resultCallback: CommonValueCallback<String?>?) {
+    override fun evaluateJavascript(script: String, resultCallback: CommonValueCallback<String?>?) {
         super.evaluateJavascript(script, resultCallback)
     }
 
@@ -65,7 +65,7 @@ class ASrcWebView(context: Context, attrs: AttributeSet?) : WebView(
      *
      * @return the width of the HTML content
      */
-    @Deprecated("hide by super ")
+    @Deprecated("hide by super ", replaceWith = ReplaceWith("nothing"))
     override fun getContentWidth(): Int {
         //由于原生的WebView，该方法被@hide了
         return 0
@@ -128,7 +128,9 @@ class ASrcWebView(context: Context, attrs: AttributeSet?) : WebView(
             //changed by fee :Android WebView页面中点击H5页面没有响应问题。
             //之前还一直以为是WebSettings设置不正确导致的，后面查了一下setWebChromeClient方法必须放在setWebViewClient的前面。
             webChromeClient = webViewClientSelector.getSrcWebChromeClient()
-            webViewClient = webViewClientSelector.getSrcWebViewClient()
+            webViewClientSelector.getSrcWebViewClient()?.let {
+                webViewClient = it
+            }
         }
     }
 
@@ -185,7 +187,7 @@ class ASrcWebView(context: Context, attrs: AttributeSet?) : WebView(
      * @param height       要截取的高
      * @param canvas       绘制到的目标画布
      */
-    override fun captureWithConfigs(width: Int, height: Int, canvas: Canvas?) {
+    override fun captureWithConfigs(width: Int, height: Int, canvas: Canvas) {
         val snapShot = capturePicture()
         snapShot.beginRecording(width, height)
         snapShot.draw(canvas)
@@ -198,6 +200,10 @@ class ASrcWebView(context: Context, attrs: AttributeSet?) : WebView(
     override fun isSrcWebView(): Boolean {
         return true
     }
+
+
+
+
 
 
 }

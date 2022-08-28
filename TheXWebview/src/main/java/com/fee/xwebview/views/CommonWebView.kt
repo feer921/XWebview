@@ -32,27 +32,33 @@ open class CommonWebView : LinearLayout {
 
     protected val TAG: String = javaClass.simpleName
 
-    constructor(context: Context) : this(context,null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs,0)
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
-    ){
-        //执行到这里时，已经初始化了 实例
-        initViews(context,attrs)
+    ) {
+        //执行到这里时，已经初始化了 实例 init{} 已经执行
+        initViews(context, attrs)
     }
 
     init {
-        L.e(TAG, "---> init()")
+        L.d(TAG, "---> init()")
     }
 
     /**
      * 是否使能 WebView的回退浏览
+     * def = false
      */
     var isEnableBackBrowse = false
 
+    /**
+     * 是否 需要让本类 在 构建 具体类型的 WebView 时 并且使用 [XWebViewHelper]中的默认对 WebView 进行相关的配置
+     * def = true
+     */
     var isNeedDefConfigWebView = true
+
     /**
      * 当前的 具体类型 WebView，本类会根据SDK初始化情况，优先使用 X5 WebView，可切换
      */
@@ -60,61 +66,72 @@ open class CommonWebView : LinearLayout {
 
 
     /**
-     * WebView 初始加载的 H5的 url地址，该地址目的是为了在系统回调 加载结束时来比较的
+     * WebView 初始加载的 H5的 url地址，该地址目的是为了在系统回调
+     * 加载结束时来比较的(因为有些网页会有重定向或者加载多个url问题)
      */
     protected var theHostUrl: String? = ""
 
     /**
      * 当前WebView 与 JS交互 所配置的接口映射名称
      * JS中调用为 webview.[javaScriptInterfaceName].method
+     * 注：本类默认持有一个，但实际上可以注册多个
      */
     private var javaScriptInterfaceName: String = ""
 
     protected var mLoadingHandle: ILoadingHandle? = null
 
     private var aSrcWebview: ASrcWebView? = null
+
     private var aX5WebView: AX5WebView? = null
 
     private var aCompatWebViewClients: ACompatWebViewClient? = null
+        get() {
+            field = mDefCompatWebViewClient
+            return field
+        }
 
     private var webViewClientAndChromClientSelector: WebViewClientAndChromeClientSelector? = null
 
-    private val TYPE_X5 = WebViewClientAndChromeClientSelector.CLIENT_TYPE_X5
-    private val TYPE_SRCWEBVIEW = WebViewClientAndChromeClientSelector.CLIENT_TYPE_SRC
+    private val typeX5 = WebViewClientAndChromeClientSelector.CLIENT_TYPE_X5
+
+    private val typeSrcwebview = WebViewClientAndChromeClientSelector.CLIENT_TYPE_SRC
+
     /**
      * 当前 WebView 的类型
-     * def: [WebViewClientAndChromeClientSelector.CLIENT_TYPE_X5]
+     * def: 0
      */
     private var curWebviewType = 0
 
     /**
-     * 在初始化[XML中配置的]中所期望使用的 WebView 类型
+     * 在初始化 XML中配置的 中所期望使用的 WebView 类型
+     * def = 9
      */
     private var theInitExpectedWebViewType = 0;
 
+    /**
+     * 延迟初始化 WebView 的 Runnable 任务
+     */
     private var delayInitWebViewTask: Runnable? = null
 
-    private fun initViews(context: Context,attrs: AttributeSet?) {
-        if (attrs==null) {
-            //to do??
+    /**
+     * 外部的 对 WebView 相关事件的 进行监听的 Client
+     */
+    var mOutSideACompatWebViewClient: ACompatWebViewClient? = null
+        set(value) {
+            field = value
+            aCompatWebViewClients?.mOutSideCompatWebViewClient = value
         }
-        var assignedDelaySeconds = 0
-        val typeArray: TypedArray? = context.obtainStyledAttributes(attrs, R.styleable.CommonWebView)
-        typeArray?.let {
-            theHostUrl = it.getString(R.styleable.CommonWebView_webViewUrl)
-            val webviewTypeAttrIndex = R.styleable.CommonWebView_webViewType
-            theInitExpectedWebViewType = it.getInt(webviewTypeAttrIndex,WebViewClientAndChromeClientSelector.CLIENT_TYPE_SRC)//10 value值
-            //延迟初始化 WebView
-            assignedDelaySeconds = it.getInt(R.styleable.CommonWebView_webViewDelayInitTime, 0)
-        }
-        typeArray?.recycle()
-        orientation = VERTICAL
-        aCompatWebViewClients = object : ACompatWebViewClient() {
+    /**
+     * 本类默认的 WebView 事件监听 Client
+     */
+    private val mDefCompatWebViewClient by lazy(LazyThreadSafetyMode.NONE) {
+        object : ACompatWebViewClient() {
             override fun shouldOverrideUrlLoading(url: String?): Boolean {
                 theWebView?.loadUrl(url ?: "")
                 L.d(TAG, "--> shouldOverrideUrlLoading() url = $url")
                 return true
             }
+
             override fun onReceivedError(
                 errorCode: Int,
                 description: String?,
@@ -124,31 +141,82 @@ open class CommonWebView : LinearLayout {
                     TAG,
                     "--> onReceivedError() errorCode = $errorCode, description = $description,failingUrl = $failingUrl"
                 )
+                mOutSideACompatWebViewClient?.onReceivedError(errorCode, description, failingUrl)
             }
+
             override fun onPageStarted(url: String?, favicon: Bitmap?) {
                 mLoadingHandle?.onLoadingProgress(true, 0)
                 L.d(TAG, "--> onPageStarted() url = $url")
+                mOutSideACompatWebViewClient?.onPageStarted(url,favicon)
             }
+
             override fun onPageFinished(url: String?) {
                 mLoadingHandle?.onLoadingFinish(url)//todo 重定向问题??
                 L.e(TAG, "--> onPageFinished() url = $url")
+                mOutSideACompatWebViewClient?.onPageFinished(url)
             }
+
             override fun onProgressChanged(newProgress: Int) {
                 mLoadingHandle?.onLoadingProgress(newProgress = newProgress)
                 L.d(TAG, "--> onProgressChanged() newProgress = $newProgress")
-            }
-            override fun onReceivedTitle(title: String?) {
-                L.d(TAG, "--> onReceivedTitle() title = $title")
+                mOutSideACompatWebViewClient?.onProgressChanged(newProgress)
             }
 
-        }//end
-        if (assignedDelaySeconds > 0) {
+            override fun onReceivedTitle(title: String?) {
+                L.d(TAG, "--> onReceivedTitle() title = $title")
+                mOutSideACompatWebViewClient?.onReceivedTitle(title)
+            }
+
+            /**
+             * @param view eg.: android.widget.FrameLayout
+             */
+            override fun handleOnShowCustomView(view: View?): ViewGroup? {
+                L.d(TAG, "--> handleOnShowCustomView() view = $view")
+                val viewGroup = mOutSideACompatWebViewClient?.handleOnShowCustomView(view)
+                return viewGroup?: super.handleOnShowCustomView(view)
+            }
+
+            override fun onHideCustomView() {
+                L.d(TAG, "--> onHideCustomView()")
+                mOutSideACompatWebViewClient?.onHideCustomView()
+            }
+
+            override fun onLoadResource(url: String?) {
+                super.onLoadResource(url)
+                L.d(TAG, "--> onLoadResource() url = $url")
+            }
+        } //end
+    }
+
+    private fun initViews(context: Context, attrs: AttributeSet?) {
+        if (attrs == null) {
+            //to do??
+        }
+        var assignedDelaySeconds = 0
+        val typeArray: TypedArray? =
+            context.obtainStyledAttributes(attrs, R.styleable.CommonWebView)
+        typeArray?.let {
+            theHostUrl = it.getString(R.styleable.CommonWebView_webViewUrl)
+            val webviewTypeAttrIndex = R.styleable.CommonWebView_webViewType
+            theInitExpectedWebViewType = it.getInt(
+                webviewTypeAttrIndex,
+                typeSrcwebview // xml 中未配置，会使用 原生 WebView
+            )//10 value值
+            //延迟初始化 WebView 的时间： 单位秒
+            assignedDelaySeconds = it.getInt(R.styleable.CommonWebView_webViewDelayInitTime, 0)
+        }
+        typeArray?.recycle()
+        orientation = VERTICAL
+
+        if (assignedDelaySeconds > 0) { //延迟初始化
             delayInitWebViewTask = Runnable { switchWebViewType(theInitExpectedWebViewType) }
             postDelayed(delayInitWebViewTask, assignedDelaySeconds * 1000L)
-        }
-        else{
-            L.e(TAG, "--> initViews() ")
-            switchWebViewType(theInitExpectedWebViewType)
+        } else {
+            L.d(
+                TAG,
+                "--> initViews(), theInitExpectedWebViewType = $theInitExpectedWebViewType"
+            )
+//            switchWebViewType(theInitExpectedWebViewType)
         }
     }
 
@@ -156,6 +224,9 @@ open class CommonWebView : LinearLayout {
     fun loadUrl(webViewUrl: String?) {
         if (!webViewUrl.isNullOrBlank()) {
             this.theHostUrl = webViewUrl
+            if (theWebView == null) {
+                switchWebViewType(theInitExpectedWebViewType)
+            }
             theWebView?.loadUrl(webViewUrl)
         }
     }
@@ -167,6 +238,9 @@ open class CommonWebView : LinearLayout {
         L.d(TAG, "--> loadUrl() theWebView = $theWebView , webViewUrl = $webViewUrl")
         if (!webViewUrl.isNullOrBlank()) {
             this.theHostUrl = webViewUrl
+            if (theWebView == null) {
+                switchWebViewType(theInitExpectedWebViewType)
+            }
             theWebView?.let {
                 configBlock(it)
                 it.loadUrl(webViewUrl)
@@ -178,7 +252,10 @@ open class CommonWebView : LinearLayout {
         theWebView?.reload()
     }
 
-    fun setLoadingHandle(theLoadingHandle: ILoadingHandle?){
+    /**
+     * 在 [loadUrl] 加载网页之前，可以 配置 自定义的 loading 状态场景 视图
+     */
+    fun setLoadingHandle(theLoadingHandle: ILoadingHandle?) {
         this.mLoadingHandle = theLoadingHandle
         theLoadingHandle?.let {
             val provideShowLoadingView = it.provideShowLoadingView()
@@ -186,9 +263,10 @@ open class CommonWebView : LinearLayout {
                 if (loadingView.parent == null) {
                     var layoutParams = loadingView.layoutParams
                     if (layoutParams == null) {
-                        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT)
+                        layoutParams =
+                            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
                     }
-                    addView(loadingView,0,layoutParams)
+                    addView(loadingView, 0, layoutParams)
                 }
             }
         }
@@ -209,14 +287,13 @@ open class CommonWebView : LinearLayout {
     }
 
 
-
     /**
      * 给当前 WebView 注册 JS 与原生交互的 接口映射对象
      * 注：一般情况下，注册一个就行
      * @param interfaceMapObj [H5Bridge]
      * @param javaScriptInterfaceName 映射的名称，该名称为 H5中JS定义的调用原生的 名称
      */
-    fun registerJavascriptInterface(interfaceMapObj: Any, javaScriptInterfaceName:String) {
+    fun registerJavascriptInterface(interfaceMapObj: Any, javaScriptInterfaceName: String) {
         this.javaScriptInterfaceName = javaScriptInterfaceName
         theWebView?.addJavascriptInterface(interfaceMapObj, javaScriptInterfaceName)
     }
@@ -228,7 +305,7 @@ open class CommonWebView : LinearLayout {
     /**
      * 获取当前 类型的WebView的名称
      */
-    fun getWebviewTypeOrName():String{
+    fun getWebviewTypeOrName(): String {
         return theWebView?.getWebviewNameOrType() ?: "no-webview"
     }
 
@@ -261,7 +338,7 @@ open class CommonWebView : LinearLayout {
      * @param jsMethodInfo eg:JS内有方法： javaToJsCallback('param')
      */
     fun loadJsMethod(jsMethodInfo: String) {
-        if (!jsMethodInfo.isBlank()) {
+        if (jsMethodInfo.isNotBlank()) {
             theWebView?.loadUrl("javascript:$jsMethodInfo")
         }
     }
@@ -283,7 +360,7 @@ open class CommonWebView : LinearLayout {
     fun runJsMethod(jsMethodName: String, vararg methodParams: Any?) {
 //        jsMethodName.isBlank()//这个方法 判断了 "" 及 "    "
         if (jsMethodName.isNotBlank()) {
-            loadJsMethod(XWebViewHelper.assembleJsMethodInfos(jsMethodName,methodParams))
+            loadJsMethod(XWebViewHelper.assembleJsMethodInfos(jsMethodName, methodParams))
         }
     }
 
@@ -292,9 +369,9 @@ open class CommonWebView : LinearLayout {
      * 注：让WebView 执行JS方法最好使用该API
      */
     @RequiresApi(19)
-    fun evaluateJsMethod(jsMethodInfo:String,callback:CommonValueCallback<String?>?){
+    fun evaluateJsMethod(jsMethodInfo: String, callback: CommonValueCallback<String?>?) {
         if (jsMethodInfo.isNotBlank()) {
-            theWebView?.evaluateJavascript(jsMethodInfo,callback)
+            theWebView?.evaluateJavascript(jsMethodInfo, callback)
         }
     }
 
@@ -316,14 +393,14 @@ open class CommonWebView : LinearLayout {
      * 切换到 原生WebView
      */
     fun switchToSrcWebView() {
-        switchWebViewType(TYPE_SRCWEBVIEW)
+        switchWebViewType(typeSrcwebview)
     }
 
     /**
      * 切换到 X5 WebView
      */
     fun switchToX5WebView() {
-        switchWebViewType(TYPE_X5)
+        switchWebViewType(typeX5)
     }
 
 
@@ -336,15 +413,16 @@ open class CommonWebView : LinearLayout {
             to = WebViewClientAndChromeClientSelector.CLIENT_TYPE_SRC.toLong()
         ) targetWebViewType: Int
     ) {
+        L.i(TAG, "--> switchWebViewType() targetWebViewType = $targetWebViewType")
         if (delayInitWebViewTask != null) {
             removeCallbacks(delayInitWebViewTask)
             delayInitWebViewTask = null
         }
-        val isTargetUseX5 = targetWebViewType == TYPE_X5
-        var isTargetUseSrcWebView = targetWebViewType == TYPE_SRCWEBVIEW
+        val isTargetUseX5 = targetWebViewType == typeX5
+        var isTargetUseSrcWebView = targetWebViewType == typeSrcwebview
         var isNeedInitLoad = false
         if (isTargetUseX5 || isTargetUseSrcWebView) {
-            if (theWebView == null) {//
+            if (theWebView == null) {// 还没有 初始化 WebView 的场景
                 isNeedInitLoad = true
                 if (isTargetUseX5) {
                     val isX5Ok = XWebViewHelper.isX5InitOk()
@@ -353,9 +431,8 @@ open class CommonWebView : LinearLayout {
                             aX5WebView = AX5WebView(context)
                         }
                         theWebView = aX5WebView
-                        curWebviewType = TYPE_X5
-                    }
-                    else{
+                        curWebviewType = typeX5
+                    } else {
                         isTargetUseSrcWebView = true
                     }
                 }
@@ -364,7 +441,7 @@ open class CommonWebView : LinearLayout {
                         aSrcWebview = ASrcWebView(context)
                     }
                     theWebView = aSrcWebview
-                    curWebviewType = TYPE_SRCWEBVIEW
+                    curWebviewType = typeSrcwebview
                 }
                 if (webViewClientAndChromClientSelector == null) {
                     webViewClientAndChromClientSelector = WebViewClientAndChromeClientSelector(
@@ -377,7 +454,7 @@ open class CommonWebView : LinearLayout {
                 theWebView!!.setWebClientSelector(webViewClientAndChromClientSelector)
                 addedTheWebView()
             }//theWebView == null end
-            else{//theWebView 已经初始化过了
+            else {//theWebView 已经初始化过了
                 val isDifCurType = curWebviewType != targetWebViewType
                 if (isDifCurType) {
                     if (isTargetUseX5) {
@@ -392,12 +469,11 @@ open class CommonWebView : LinearLayout {
                         theWebView = aX5WebView
                         theWebView?.setWebClientSelector(webViewClientAndChromClientSelector)
                         addedTheWebView()
-                        curWebviewType = TYPE_X5
+                        curWebviewType = typeX5
                         aSrcWebview?.let {
                             removeView(it)
                         }
-                    }
-                    else{//要切换到 原生WebView
+                    } else {//要切换到 原生WebView
                         if (aSrcWebview == null) {
                             aSrcWebview = ASrcWebView(context)
                         }
@@ -405,7 +481,7 @@ open class CommonWebView : LinearLayout {
                         theWebView = aX5WebView
                         theWebView?.setWebClientSelector(webViewClientAndChromClientSelector)
                         addedTheWebView()
-                        curWebviewType = TYPE_SRCWEBVIEW
+                        curWebviewType = typeSrcwebview
                         aX5WebView?.let {
                             removeView(it)
                         }
@@ -434,7 +510,8 @@ open class CommonWebView : LinearLayout {
     protected open fun layoutWebView(theWebView: View) {
         var mayExistSrcLayoutParam: ViewGroup.LayoutParams? = theWebView.layoutParams
         if (mayExistSrcLayoutParam == null) {
-            mayExistSrcLayoutParam = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+            mayExistSrcLayoutParam =
+                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             theWebView.layoutParams = mayExistSrcLayoutParam
         }
         addView(theWebView)

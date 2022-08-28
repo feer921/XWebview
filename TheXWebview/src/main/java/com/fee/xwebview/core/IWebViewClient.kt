@@ -82,7 +82,7 @@ interface IWebViewClient {
     val ERROR_UNSAFE_RESOURCE: Int
         get() = -16
 
-    @Deprecated("")
+    @Deprecated("Android原生标记为过时", replaceWith = ReplaceWith("shouldOverrideUrlLoading()","CommonWebResourceRequest"))
     fun shouldOverrideUrlLoading(url: String?): Boolean
 
     /**

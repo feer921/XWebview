@@ -55,7 +55,14 @@ open class WebViewClientAndChromeClientSelector(
     }
 
     companion object ClientSelector{
+        /**
+         * == 10
+         */
         const val CLIENT_TYPE_X5 = 10
+
+        /**
+         * == 11
+         */
         const val CLIENT_TYPE_SRC = CLIENT_TYPE_X5 + 1
 
         fun aSrcWebViewClientsSelector(

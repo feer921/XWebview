@@ -2,9 +2,9 @@ package com.fee.xwebview.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.fee.xwebview.demo.databinding.ActivityUserinfoBinding
 import com.fee.xwebview.demo.viewModels.UserViewModel
+import com.tencent.smtt.utils.l
 
 /**
  * ******************(^_^)***********************<br>
@@ -17,17 +17,16 @@ import com.fee.xwebview.demo.viewModels.UserViewModel
  */
 class UserInfosActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityUserinfoBinding
+    private lateinit var mViewBinding: ActivityUserinfoBinding
 
     private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userViewModel = UserViewModel()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_userinfo)
-        binding.userViewModel = userViewModel
-        binding.lifecycleOwner = this
-
+        mViewBinding = ActivityUserinfoBinding.inflate(layoutInflater)
+//        mViewBinding.userViewModel = userViewModel
+//        binding.lifecycleOwner = this
     }
 
 }

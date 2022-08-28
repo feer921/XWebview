@@ -33,6 +33,7 @@
         android:id="@+id/tvHeaderTitle"
         android:ellipsize="end"
         android:maxWidth="200dp"
+        android:maxLines="1"
         />
 
 

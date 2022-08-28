@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import com.fee.xwebview.L
 import com.fee.xwebview.core.IWebChromeClient
 
 /**
@@ -55,6 +56,10 @@ open class ASrcWebChromeClient : WebChromeClient() {
         chromeClient?.onReceivedIcon(icon)
     }
 
+    override fun onReceivedTouchIconUrl(view: WebView?, url: String?, precomposed: Boolean) {
+        super.onReceivedTouchIconUrl(view, url, precomposed)
+        L.d("ASrcWebChromeClient", "--> onReceivedTouchIconUrl() url = $url")
+    }
     /**
      * Tell the client to display a javascript alert dialog.  If the client
      * returns true, WebView will assume that the client will handle the

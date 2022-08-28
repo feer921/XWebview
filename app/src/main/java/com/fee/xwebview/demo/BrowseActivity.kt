@@ -1,13 +1,17 @@
 package com.fee.xwebview.demo
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.fee.xwebview.XWebViewHelper
+import com.fee.xwebview.core.ACompatWebViewClient
 import com.fee.xwebview.demo.databinding.ActivityBrowseBinding
 import com.fee.xwebview.views.DefLoadingHandle
 
@@ -21,28 +25,96 @@ import com.fee.xwebview.views.DefLoadingHandle
  * </p>
  * ******************(^_^)***********************
  */
-class BrowseActivity : AppCompatActivity(),View.OnClickListener {
-    //    private lateinit var webView: CommonWebView
-    private lateinit var dataBinding: ActivityBrowseBinding
+class BrowseActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var mViewBinding: ActivityBrowseBinding
 
     private lateinit var tvHeaderTitle: TextView
     private lateinit var ivHeaderRefresh: ImageView
 
+    private var mLastScreenOrientation = 0
+
+    private val mCompatWebViewClient by lazy(LazyThreadSafetyMode.NONE) {
+        object : ACompatWebViewClient(){
+            override fun shouldOverrideUrlLoading(url: String?): Boolean {
+                mViewBinding.commonWebview.loadUrl(url)
+                return true
+            }
+
+            /**
+             * Callback from X5 webviwe
+             * @param errorCode
+             * @param description
+             * @param failingUrl
+             */
+            override fun onReceivedError(
+                errorCode: Int,
+                description: String?,
+                failingUrl: String?
+            ) {
+            }
+
+            override fun onPageFinished(url: String?) {
+            }
+
+            /**
+             * Tell the host application the current progress of loading a page.
+             *
+             *
+             * //     * @param view        The WebView that initiated the callback.
+             *
+             * @param newProgress Current page loading progress, represented by
+             */
+            override fun onProgressChanged(newProgress: Int) {
+            }
+
+            /**
+             * Notify the host application of a change in the document title.
+             *
+             * @param title A String containing the new title of the document.
+             */
+            override fun onReceivedTitle(title: String?) {
+                tvHeaderTitle.text = title
+            }
+
+            override fun handleOnShowCustomView(view: View?): ViewGroup? {
+                requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                //当 播放的视频 全屏(横屏时，如果按返回键，则会先恢复到竖屏)
+                return mViewBinding.flContainer
+
+            }
+
+            override fun onHideCustomView() {
+                super.onHideCustomView()
+                requestedOrientation  = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+        }
+    }
+
+    private val tag = "BrowseActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window?.let {
+            it.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+
+        }
+        mLastScreenOrientation = requestedOrientation
         supportActionBar?.hide()
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_browse)
-        dataBinding.llHeaderView.let {
-            findViewById<View>(R.id.ivBtnHeaderBack).setOnClickListener(this)
-            ivHeaderRefresh = findViewById(R.id.ivBtnHeaderRefresh);
+        Log.d(tag, "--> onCreate() ")
+        mViewBinding = ActivityBrowseBinding.inflate(layoutInflater)
+        setContentView(mViewBinding.root)
+        mViewBinding.llHeaderView.let {
+            it.ivBtnHeaderBack.setOnClickListener(this)
+            ivHeaderRefresh = it.ivBtnHeaderRefresh
+//            ivHeaderRefresh = findViewById(R.id.ivBtnHeaderRefresh);
             ivHeaderRefresh.setOnClickListener(this)
-            findViewById<View>(R.id.ivBtnHeaderClose).setOnClickListener(this)
-            tvHeaderTitle = findViewById(R.id.tvHeaderTitle)
+            it.ivBtnHeaderClose.setOnClickListener(this)
+            tvHeaderTitle = it.tvHeaderTitle
             tvHeaderTitle.text = ""
+            it.root.setPadding(0,60,0,0)
         }
 
-        dataBinding.commonWebview.isEnableBackBrowse = true
-        dataBinding.commonWebview.run {
+        mViewBinding.commonWebview.run {
             isEnableBackBrowse = true
             val defLoadingHandle = DefLoadingHandle(context)
             val myProgressBar = View.inflate(
@@ -55,22 +127,24 @@ class BrowseActivity : AppCompatActivity(),View.OnClickListener {
 
             defLoadingHandle.configOutSideProgressBar(myProgressBar as ProgressBar)
             setLoadingHandle(defLoadingHandle)
-                loadUrl(
+            this.mOutSideACompatWebViewClient = mCompatWebViewClient
+            loadUrl(
 //            "http://www.doubiekan.net/"
-                    "https://www.baidu.com"
-                ){
-                    XWebViewHelper.commonConfigWebViewSettings(this)
-                }
+                "https://www.xiaoli123.cc/"
+            ) {
+//                XWebViewHelper.commonConfigWebViewSettings(this)
+            }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        dataBinding.commonWebview.release(true, isWillDestroy = true)
+        mViewBinding.commonWebview.release(true, isWillDestroy = true)
+        Log.d(tag, "--> onDestroy() ")
     }
 
     override fun onBackPressed() {
-        val isCanGobackBrowse = dataBinding.commonWebview.onBackBrowse()
+        val isCanGobackBrowse = mViewBinding.commonWebview.onBackBrowse()
         if (isCanGobackBrowse) {
             return
         }
@@ -87,17 +161,25 @@ class BrowseActivity : AppCompatActivity(),View.OnClickListener {
             R.id.ivBtnHeaderBack -> {
                 onBackPressed()
             }
-            R.id.ivBtnHeaderClose ->{
+            R.id.ivBtnHeaderClose -> {
                 finish()
             }
-            R.id.ivBtnHeaderRefresh ->{
-                ivHeaderRefresh.animate().rotationBy(360f).setDuration(1000L)/*.withEndAction {
+            R.id.ivBtnHeaderRefresh -> {
+                ivHeaderRefresh.animate().rotationBy(360f).setDuration(1000L)
+                    /*.withEndAction {
 
-                }*/.start()
-                dataBinding.commonWebview.reload()
+                }*/
+                    .start()
+                mViewBinding.commonWebview.reload()
             }
             else -> {
             }
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Log.i(tag, "--> onConfigurationChanged() newConfig = $newConfig")
+
     }
 }

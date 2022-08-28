@@ -11,11 +11,13 @@
         android:theme="@style/AppTheme"
         android:name=".App"
         android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true"
         >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|density|fontScale|layoutDirection|locale|mcc|mnc|keyboardHidden|uiMode"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,16 +25,17 @@
             </intent-filter>
         </activity>
         <!--  网页浏览 Activity      -->
-        <activity android:name=".BrowseActivity"
-            >
-
-        </activity>
+        <activity
+            android:name=".BrowseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            />
         <activity android:name=".TestCoordinatorLayoutAct" />
         <activity android:name=".TestBehaviorActivity" />
 
         <provider android:authorities="com.fee.my"
             android:name=".MyContentProvider"
-            android:exported="true">
+            android:exported="false">
         </provider>
     </application>
 

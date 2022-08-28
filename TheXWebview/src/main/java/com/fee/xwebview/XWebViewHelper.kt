@@ -11,6 +11,7 @@ import com.fee.xwebview.views.IWebview
  * ******************(^_^)***********************<br>
  * User: fee(QQ/WeiXin:1176610771)<br>
  * <P>DESC:
+ * WebView 初始化，辅助类
  * </p>
  * ******************(^_^)***********************
  */
@@ -37,32 +38,45 @@ object XWebViewHelper {
     fun isX5InitOk():Boolean {
         return this.isX5InitOk
     }
-    fun initWebViewService(context: Context,needBroadcastInitResult: Boolean = false,canInitX5WithoutWifi: Boolean = true) {
-        val intent: Intent = Intent(context, X5LoadService::class.java)
-        intent.putExtra(INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI,canInitX5WithoutWifi)
-            .putExtra(INTENT_KEY_NEED_BROADCAST_INIT_RESULT,needBroadcastInitResult)
+
+    /**
+     * 启动 初始化 X5 WebView 内核的 独立进程 Service
+     * 目的为 让 X5 内核的初始化 在独立进程中进行不影响 主进程
+     */
+    fun initWebViewService(
+        context: Context,
+        needBroadcastInitResult: Boolean = false,
+        canInitX5WithoutWifi: Boolean = true
+    ) {
+        val intent = Intent(context, X5LoadService::class.java)
+        intent.putExtra(INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI, canInitX5WithoutWifi)
+            .putExtra(INTENT_KEY_NEED_BROADCAST_INIT_RESULT, needBroadcastInitResult)
         context.startService(intent)
     }
 
 
     /**
      * 较通用的配置 WebView
+     * @param theWebView 当前的具体的 类型 的 WebView 实例
      */
     fun commonConfigWebViewSettings(theWebView: IWebview) {
         theWebView.getWebSettings(false)?.apply {
             setAppCacheEnabled(true)
             allowContentAccess = true
+            // Using setJavaScriptEnabled can introduce XSS vulnerabilities into your application,
+            // review carefully
             javaScriptEnabled = true
-            setSupportZoom(false)
+            setSupportZoom(true)
             useWideViewPort = true//设置此属性，可任意比例缩放 设置webview推荐使用的窗口
             domStorageEnabled = true
             loadWithOverviewMode = true
+            builtInZoomControls = true
             javaScriptCanOpenWindowsAutomatically = true
             allowFileAccess = true
             setAllowFileAccessFromFileURLs(true)
             setSupportMultipleWindows(true)
             setPluginsEnabled(true)
-            savePassword = false
+            savePassword = true
             textZoom = 100
             mediaPlaybackRequiresUserGesture = false
             if (Api.isApiCompatible(21)) {
@@ -82,7 +96,7 @@ object XWebViewHelper {
      * @return .: "callJsMethod('10',true,'man')"
      */
     fun assembleJsMethodInfos(justJsMethodName: String, vararg jsMethodParams: Any?): String {
-        if (!justJsMethodName.isBlank()) {
+        if (justJsMethodName.isNotBlank()) {
             val sb: StringBuilder = StringBuilder("$justJsMethodName(")
             val paramLen = jsMethodParams.size
             jsMethodParams.forEachIndexed { index, aParam ->

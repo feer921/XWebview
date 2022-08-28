@@ -30,4 +30,10 @@ object L {
             Log.e(logTag, logContent, throwable)
         }
     }
+
+    internal fun i(logTag: String,logContent: String){
+        if (isDebug) {
+            Log.i(logTag, logContent)
+        }
+    }
 }

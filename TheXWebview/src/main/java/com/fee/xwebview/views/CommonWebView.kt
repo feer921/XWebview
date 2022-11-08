@@ -126,6 +126,10 @@ open class CommonWebView : LinearLayout {
      */
     private val mDefCompatWebViewClient by lazy(LazyThreadSafetyMode.NONE) {
         object : ACompatWebViewClient() {
+            @Deprecated(
+                "Android原生标记为过时",
+                replaceWith = ReplaceWith("shouldOverrideUrlLoading()", "CommonWebResourceRequest")
+            )
             override fun shouldOverrideUrlLoading(url: String?): Boolean {
                 theWebView?.loadUrl(url ?: "")
                 L.d(TAG, "--> shouldOverrideUrlLoading() url = $url")

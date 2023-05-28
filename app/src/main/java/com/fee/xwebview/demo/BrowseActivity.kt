@@ -130,7 +130,8 @@ class BrowseActivity : AppCompatActivity(), View.OnClickListener {
             this.mOutSideACompatWebViewClient = mCompatWebViewClient
             loadUrl(
 //            "http://www.doubiekan.net/"
-                "https://www.xiaoli123.cc/"
+//                "https://www.xiaoli123.cc/"
+                "https://www.baidu.com"
             ) {
 //                XWebViewHelper.commonConfigWebViewSettings(this)
             }

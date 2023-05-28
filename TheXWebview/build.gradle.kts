@@ -1,8 +1,9 @@
 plugins{
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
 }
+apply(from = "maven_publish.gradle")
+
 android{
     compileSdk = 31
     defaultConfig{
@@ -19,9 +20,11 @@ android{
         jvmTarget = "1.8" // 默认为 1.6，不变更这个，会导致 编译报错：Cannot inline bytecode built with JVM target 1.8 into bytecode that
     }
 
-//    buildTypes{
-//
-//    }
+    publishing {
+        singleVariant("release"){
+            withSourcesJar()
+        }
+    }
 }
 
 //android {
@@ -45,15 +48,15 @@ dependencies {
             )
         )
     )
-    implementation( "org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+    implementation( "org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
     implementation( "androidx.core:core-ktx:1.7.0")
     implementation ("androidx.appcompat:appcompat:1.4.1")
 
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
 
     testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
 
     api("com.tencent.tbs:tbssdk:44286") //1. 移除文档打开 API。如需文档打开能力请移步：文档SDK
 

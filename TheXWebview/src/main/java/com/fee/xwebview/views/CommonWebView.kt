@@ -16,7 +16,6 @@ import com.fee.xwebview.core.ACompatWebViewClient
 import com.fee.xwebview.core.CommonValueCallback
 import com.fee.xwebview.core.WebViewClientAndChromeClientSelector
 import com.fee.xwebview.core.src.ASrcWebView
-import com.fee.xwebview.core.x5.AX5WebView
 
 /**
  * ******************(^_^)***********************<br>
@@ -30,7 +29,7 @@ import com.fee.xwebview.core.x5.AX5WebView
  */
 open class CommonWebView : LinearLayout {
 
-    protected val TAG: String = javaClass.simpleName
+    protected val TAG: String = "CommonWebView"
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -82,7 +81,7 @@ open class CommonWebView : LinearLayout {
 
     private var aSrcWebview: ASrcWebView? = null
 
-    private var aX5WebView: AX5WebView? = null
+//    private var aX5WebView: AX5WebView? = null
 
     private var aCompatWebViewClients: ACompatWebViewClient? = null
         get() {
@@ -393,19 +392,19 @@ open class CommonWebView : LinearLayout {
         theWebView = null
     }
 
-    /**
-     * 切换到 原生WebView
-     */
-    fun switchToSrcWebView() {
-        switchWebViewType(typeSrcwebview)
-    }
-
-    /**
-     * 切换到 X5 WebView
-     */
-    fun switchToX5WebView() {
-        switchWebViewType(typeX5)
-    }
+//    /**
+//     * 切换到 原生WebView
+//     */
+//    fun switchToSrcWebView() {
+//        switchWebViewType(typeSrcwebview)
+//    }
+//
+//    /**
+//     * 切换到 X5 WebView
+//     */
+//    fun switchToX5WebView() {
+//        switchWebViewType(typeX5)
+//    }
 
 
     /**
@@ -431,10 +430,10 @@ open class CommonWebView : LinearLayout {
                 if (isTargetUseX5) {
                     val isX5Ok = XWebViewHelper.isX5InitOk()
                     if (isX5Ok) {
-                        if (aX5WebView == null) {
-                            aX5WebView = AX5WebView(context)
-                        }
-                        theWebView = aX5WebView
+//                        if (aX5WebView == null) {
+//                            aX5WebView = AX5WebView(context)
+//                        }
+//                        theWebView = aX5WebView
                         curWebviewType = typeX5
                     } else {
                         isTargetUseSrcWebView = true
@@ -462,15 +461,15 @@ open class CommonWebView : LinearLayout {
                 val isDifCurType = curWebviewType != targetWebViewType
                 if (isDifCurType) {
                     if (isTargetUseX5) {
-                        if (aX5WebView == null) {
-                            val isX5Ok = XWebViewHelper.isX5InitOk()
-                            if (!isX5Ok) {
-                                return // 切换失败,保留使用 原生 WebView
-                            }
-                            aX5WebView = AX5WebView(context)
-                        }
+//                        if (aX5WebView == null) {
+//                            val isX5Ok = XWebViewHelper.isX5InitOk()
+//                            if (!isX5Ok) {
+//                                return // 切换失败,保留使用 原生 WebView
+//                            }
+//                            aX5WebView = AX5WebView(context)
+//                        }
                         isNeedInitLoad = true
-                        theWebView = aX5WebView
+//                        theWebView = aX5WebView
                         theWebView?.setWebClientSelector(webViewClientAndChromClientSelector)
                         addedTheWebView()
                         curWebviewType = typeX5
@@ -482,13 +481,13 @@ open class CommonWebView : LinearLayout {
                             aSrcWebview = ASrcWebView(context)
                         }
                         isNeedInitLoad = true
-                        theWebView = aX5WebView
+//                        theWebView = aX5WebView
                         theWebView?.setWebClientSelector(webViewClientAndChromClientSelector)
                         addedTheWebView()
                         curWebviewType = typeSrcwebview
-                        aX5WebView?.let {
-                            removeView(it)
-                        }
+//                        aX5WebView?.let {
+//                            removeView(it)
+//                        }
                     }
                 }
             }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fee.xwebview.demo.databinding.ActivityUserinfoBinding
 import com.fee.xwebview.demo.viewModels.UserViewModel
-import com.tencent.smtt.utils.l
 
 /**
  * ******************(^_^)***********************<br>

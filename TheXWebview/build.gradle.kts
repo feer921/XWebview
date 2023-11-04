@@ -58,7 +58,7 @@ dependencies {
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
 
-    api("com.tencent.tbs:tbssdk:44286") //1. 移除文档打开 API。如需文档打开能力请移步：文档SDK
+//    api("com.tencent.tbs:tbssdk:44286") //1. 移除文档打开 API。如需文档打开能力请移步：文档SDK
 
 
 

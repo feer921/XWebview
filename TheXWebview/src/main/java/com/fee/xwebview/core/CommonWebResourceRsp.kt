@@ -1,6 +1,8 @@
 package com.fee.xwebview.core
 
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse
+import android.webkit.WebResourceResponse
+
+//import com.tencent.smtt.export.external.interfaces.WebResourceResponse
 
 /**
  * ******************(^_^)***********************<br>
@@ -13,12 +15,12 @@ import com.tencent.smtt.export.external.interfaces.WebResourceResponse
  * ******************(^_^)***********************
  */
 class CommonWebResourceRsp {
-    var x5WebResourceResponse: WebResourceResponse? = null
+//    var x5WebResourceResponse: WebResourceResponse? = null
     var srcWebResourceResponse: android.webkit.WebResourceResponse? = null
 
-    constructor(x5WebResourceResponse: WebResourceResponse?){
-        this.x5WebResourceResponse = x5WebResourceResponse
-    }
+//    constructor(x5WebResourceResponse: WebResourceResponse?){
+//        this.x5WebResourceResponse = x5WebResourceResponse
+//    }
     constructor(srcWebResourceResponse: android.webkit.WebResourceResponse?){
         this.srcWebResourceResponse = srcWebResourceResponse
     }

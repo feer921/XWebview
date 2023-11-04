@@ -2,8 +2,9 @@ package com.fee.xwebview.core
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.webkit.WebResourceRequest
 import com.fee.xwebview.Api
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest
+//import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 
 /**
  * ******************(^_^)***********************<br>
@@ -36,17 +37,17 @@ open class CommonWebResourceRequest {
         justReqUrl = justUrl
     }
 
-    constructor(x5WebResourceRequest: WebResourceRequest?) {
-        if (x5WebResourceRequest != null) {
-            isX5WebResourceReq = true
-            curUri = x5WebResourceRequest.url
-            curMethod = x5WebResourceRequest.method
-            isRedirect = x5WebResourceRequest.isRedirect
-            isForMainFrame = x5WebResourceRequest.isForMainFrame
-            isHasGesture = x5WebResourceRequest.hasGesture()
-            curRequestHeaders = x5WebResourceRequest.requestHeaders
-        }
-    }
+//    constructor(x5WebResourceRequest: WebResourceRequest?) {
+//        if (x5WebResourceRequest != null) {
+//            isX5WebResourceReq = true
+//            curUri = x5WebResourceRequest.url
+//            curMethod = x5WebResourceRequest.method
+//            isRedirect = x5WebResourceRequest.isRedirect
+//            isForMainFrame = x5WebResourceRequest.isForMainFrame
+//            isHasGesture = x5WebResourceRequest.hasGesture()
+//            curRequestHeaders = x5WebResourceRequest.requestHeaders
+//        }
+//    }
 
     @SuppressLint("NewApi")
     constructor(srcWebResourceRequest: android.webkit.WebResourceRequest?) {

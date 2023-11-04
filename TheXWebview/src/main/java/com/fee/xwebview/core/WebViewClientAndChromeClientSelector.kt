@@ -2,8 +2,8 @@ package com.fee.xwebview.core
 
 import com.fee.xwebview.core.src.ASrcWebChromeClient
 import com.fee.xwebview.core.src.ASrcWebViewClient
-import com.fee.xwebview.core.x5.AX5WebChromeClient
-import com.fee.xwebview.core.x5.AX5WebViewClient
+//import com.fee.xwebview.core.x5.AX5WebChromeClient
+//import com.fee.xwebview.core.x5.AX5WebViewClient
 
 /**
  * ******************(^_^)***********************<br>
@@ -20,9 +20,9 @@ open class WebViewClientAndChromeClientSelector(
     private val webViewClientType: Int, private val webviewClientImp: IWebViewClient?,
    private val webviewChromeClientImp: IWebChromeClient?
 ) {
-    private var ax5WebViewClient: AX5WebViewClient? = null
+//    private var ax5WebViewClient: AX5WebViewClient? = null
 
-    private var ax5WebChromeClient: AX5WebChromeClient? = null
+//    private var ax5WebChromeClient: AX5WebChromeClient? = null
 
     private var srcWebViewClient: ASrcWebViewClient? = null
 
@@ -44,10 +44,10 @@ open class WebViewClientAndChromeClientSelector(
                 srcWebChromeClient?.setChromeClientListener(webviewChromeClientImp)
             }
             CLIENT_TYPE_X5 -> {
-                ax5WebViewClient = AX5WebViewClient()
-                ax5WebViewClient?.setWebViewClientListener(webviewClientImp)
-                ax5WebChromeClient = AX5WebChromeClient()
-                ax5WebChromeClient?.setWebChromeClientListener(webviewChromeClientImp)
+//                ax5WebViewClient = AX5WebViewClient()
+//                ax5WebViewClient?.setWebViewClientListener(webviewClientImp)
+//                ax5WebChromeClient = AX5WebChromeClient()
+//                ax5WebChromeClient?.setWebChromeClientListener(webviewChromeClientImp)
             }
             else -> {
             }
@@ -84,28 +84,28 @@ open class WebViewClientAndChromeClientSelector(
 
 
     fun free() {
-        ax5WebViewClient?.setWebViewClientListener(null)
-        ax5WebChromeClient?.setWebChromeClientListener(null)
+//        ax5WebViewClient?.setWebViewClientListener(null)
+//        ax5WebChromeClient?.setWebChromeClientListener(null)
 
         srcWebViewClient?.setWebViewClientListener(null)
         srcWebChromeClient?.setChromeClientListener(null)
     }
 
-    open fun getX5WebViewClient(): AX5WebViewClient? {
-        if (ax5WebViewClient == null && isFullCompatAllClients) {
-            ax5WebViewClient = AX5WebViewClient()
-            ax5WebViewClient?.setWebViewClientListener(webviewClientImp)
-        }
-        return ax5WebViewClient
-    }
-
-    open fun getX5WebChromeClient(): AX5WebChromeClient? {
-        if (ax5WebChromeClient == null && isFullCompatAllClients) {
-            ax5WebChromeClient = AX5WebChromeClient()
-            ax5WebChromeClient?.setWebChromeClientListener(webviewChromeClientImp)
-        }
-        return ax5WebChromeClient
-    }
+//    open fun getX5WebViewClient(): AX5WebViewClient? {
+//        if (ax5WebViewClient == null && isFullCompatAllClients) {
+//            ax5WebViewClient = AX5WebViewClient()
+//            ax5WebViewClient?.setWebViewClientListener(webviewClientImp)
+//        }
+//        return ax5WebViewClient
+//    }
+//
+//    open fun getX5WebChromeClient(): AX5WebChromeClient? {
+//        if (ax5WebChromeClient == null && isFullCompatAllClients) {
+//            ax5WebChromeClient = AX5WebChromeClient()
+//            ax5WebChromeClient?.setWebChromeClientListener(webviewChromeClientImp)
+//        }
+//        return ax5WebChromeClient
+//    }
 
     open fun getSrcWebViewClient(): ASrcWebViewClient? {
         if (srcWebViewClient == null && isFullCompatAllClients) {

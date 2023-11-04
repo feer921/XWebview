@@ -1,6 +1,7 @@
 package com.fee.xwebview.core
 
-import com.tencent.smtt.sdk.ValueCallback
+import android.webkit.ValueCallback
+
 
 /**
  * ******************(^_^)***********************<br>

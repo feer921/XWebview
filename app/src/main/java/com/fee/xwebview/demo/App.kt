@@ -17,6 +17,6 @@ class App : Application() {
     override fun onCreate() {
         Log.e("App"," --> onCreate()")
         super.onCreate()
-        XWebViewHelper.initWebViewService(this)
+//        XWebViewHelper.initWebViewService(this)
     }
 }

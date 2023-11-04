@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.webkit.WebView
 import com.fee.TheXWebview.BuildConfig
-import com.fee.xwebview.core.x5.X5LoadService
+//import com.fee.xwebview.core.x5.X5LoadService
 import com.fee.xwebview.views.IWebview
 
 /**
@@ -43,16 +43,16 @@ object XWebViewHelper {
      * 启动 初始化 X5 WebView 内核的 独立进程 Service
      * 目的为 让 X5 内核的初始化 在独立进程中进行不影响 主进程
      */
-    fun initWebViewService(
-        context: Context,
-        needBroadcastInitResult: Boolean = false,
-        canInitX5WithoutWifi: Boolean = true
-    ) {
-        val intent = Intent(context, X5LoadService::class.java)
-        intent.putExtra(INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI, canInitX5WithoutWifi)
-            .putExtra(INTENT_KEY_NEED_BROADCAST_INIT_RESULT, needBroadcastInitResult)
-        context.startService(intent)
-    }
+//    fun initWebViewService(
+//        context: Context,
+//        needBroadcastInitResult: Boolean = false,
+//        canInitX5WithoutWifi: Boolean = true
+//    ) {
+//        val intent = Intent(context, X5LoadService::class.java)
+//        intent.putExtra(INTENT_KEY_CAN_DOWNLOAD_X5_WITHOUT_WIFI, canInitX5WithoutWifi)
+//            .putExtra(INTENT_KEY_NEED_BROADCAST_INIT_RESULT, needBroadcastInitResult)
+//        context.startService(intent)
+//    }
 
 
     /**

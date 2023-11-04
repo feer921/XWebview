@@ -3,7 +3,8 @@ package com.fee.xwebview.core;
 
 import android.annotation.TargetApi;
 import android.webkit.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
+import android.webkit.WebSettings;
+//import com.tencent.smtt.sdk.WebSettings;
 
 /**
  * ******************(^_^)***********************<br>
@@ -18,7 +19,7 @@ import com.tencent.smtt.sdk.WebSettings;
  */
 public class WebSettingsWrapper {
 
-    protected WebSettings x5WebSettings;
+//    protected WebSettings x5WebSettings;
     protected android.webkit.WebSettings srcWebSettings;
 
 
@@ -26,9 +27,9 @@ public class WebSettingsWrapper {
         this.srcWebSettings = srcWebSettings;
     }
 
-    public void setX5WebSettingsDelegate(WebSettings x5WebSettings) {
-        this.x5WebSettings = x5WebSettings;
-    }
+//    public void setX5WebSettingsDelegate(WebSettings x5WebSettings) {
+//        this.x5WebSettings = x5WebSettings;
+//    }
 
     /**
      * Sets whether the WebView should support zooming using its on-screen zoom
@@ -43,9 +44,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setSupportZoom(support);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setSupportZoom(support);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setSupportZoom(support);
+//        }
         return this;
     }
 
@@ -61,9 +62,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getMixedContentMode();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getMixedContentMode();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getMixedContentMode();
+//        }
         return -1;
     }
 
@@ -77,9 +78,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.supportZoom();
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.supportZoom();
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.supportZoom();
+//        }
         return false;
     }
 
@@ -99,9 +100,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setDisplayZoomControls(enabled);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setBuiltInZoomControls(enabled);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setBuiltInZoomControls(enabled);
+//        }
         return this;
     }
 
@@ -115,9 +116,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getBuiltInZoomControls();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getBuiltInZoomControls();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getBuiltInZoomControls();
+//        }
         return false;
     }
 
@@ -132,9 +133,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setDisplayZoomControls(enabled);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setDisplayZoomControls(enabled);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setDisplayZoomControls(enabled);
+//        }
         return this;
     }
 
@@ -150,9 +151,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getDisplayZoomControls();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getDisplayZoomControls();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getDisplayZoomControls();
+//        }
         return false;
     }
 
@@ -169,9 +170,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAllowFileAccess(allow);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAllowFileAccess(allow);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAllowFileAccess(allow);
+//        }
         return this;
     }
 
@@ -184,9 +185,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getAllowFileAccess();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getAllowFileAccess();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getAllowFileAccess();
+//        }
         return false;
     }
 
@@ -200,9 +201,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAllowContentAccess(allow);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAllowContentAccess(allow);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAllowContentAccess(allow);
+//        }
         return this;
     }
 
@@ -215,9 +216,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getAllowContentAccess();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getAllowContentAccess();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getAllowContentAccess();
+//        }
         return false;
     }
 
@@ -241,9 +242,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setMixedContentMode(mode);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setMixedContentMode(mode);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setMixedContentMode(mode);
+//        }
         return this;
     }
 
@@ -258,9 +259,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setLoadWithOverviewMode(overview);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setLoadWithOverviewMode(overview);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setLoadWithOverviewMode(overview);
+//        }
         return this;
     }
 
@@ -274,9 +275,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getLoadWithOverviewMode();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getLoadWithOverviewMode();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getLoadWithOverviewMode();
+//        }
         return false;
     }
 
@@ -294,9 +295,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setEnableSmoothTransition(enable);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setEnableSmoothTransition(enable);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setEnableSmoothTransition(enable);
+//        }
         return this;
     }
 
@@ -312,9 +313,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.enableSmoothTransition();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.enableSmoothTransition();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.enableSmoothTransition();
+//        }
         return false;
     }
 
@@ -332,9 +333,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setSaveFormData(save);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setSaveFormData(save);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setSaveFormData(save);
+//        }
         return this;
     }
 
@@ -348,9 +349,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getSaveFormData();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getSaveFormData();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getSaveFormData();
+//        }
         return false;
     }
 
@@ -365,9 +366,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setSavePassword(save);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setSavePassword(save);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setSavePassword(save);
+//        }
         return this;
     }
 
@@ -382,9 +383,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getSavePassword();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getSavePassword();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getSavePassword();
+//        }
         return false;
     }
 
@@ -398,9 +399,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setTextZoom(textZoom);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setTextZoom(textZoom);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setTextZoom(textZoom);
+//        }
         return this;
     }
 
@@ -414,9 +415,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getTextZoom();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getTextZoom();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getTextZoom();
+//        }
         return 100;
     }
 
@@ -430,9 +431,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setLightTouchEnabled(enabled);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setLightTouchEnabled(enabled);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setLightTouchEnabled(enabled);
+//        }
         return this;
     }
 
@@ -446,9 +447,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getLightTouchEnabled();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getLightTouchEnabled();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getLightTouchEnabled();
+//        }
         return false;
     }
 
@@ -466,9 +467,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setUserAgentString(ua);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setUserAgent(ua);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setUserAgent(ua);
+//        }
         return this;
     }
 
@@ -482,9 +483,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getUserAgentString();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getUserAgentString();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getUserAgentString();
+//        }
         return "";
     }
 
@@ -504,9 +505,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setUseWideViewPort(use);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setUseWideViewPort(use);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setUseWideViewPort(use);
+//        }
         return this;
     }
 
@@ -521,9 +522,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getUseWideViewPort();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getUseWideViewPort();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getUseWideViewPort();
+//        }
         return false;
     }
 
@@ -538,9 +539,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setSupportMultipleWindows(support);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setSupportMultipleWindows(support);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setSupportMultipleWindows(support);
+//        }
         return this;
     }
 
@@ -554,9 +555,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.supportMultipleWindows();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.supportMultipleWindows();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.supportMultipleWindows();
+//        }
         return false;
     }
 
@@ -582,9 +583,9 @@ public class WebSettingsWrapper {
      * @return
      */
     public WebSettingsWrapper setX5LayoutAlgorithm(WebSettings.LayoutAlgorithm var1) {
-        if (x5WebSettings != null) {
-            x5WebSettings.setLayoutAlgorithm(var1);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setLayoutAlgorithm(var1);
+//        }
         return this;
     }
 
@@ -592,9 +593,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setStandardFontFamily(font);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setStandardFontFamily(font);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setStandardFontFamily(font);
+//        }
         return this;
     }
 
@@ -608,9 +609,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getStandardFontFamily();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getStandardFontFamily();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getStandardFontFamily();
+//        }
         return "";
     }
 
@@ -618,9 +619,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setFixedFontFamily(font);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setFixedFontFamily(font);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setFixedFontFamily(font);
+//        }
         return this;
     }
 
@@ -634,9 +635,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getFixedFontFamily();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getFixedFontFamily();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getFixedFontFamily();
+//        }
         return "";
     }
 
@@ -650,9 +651,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setMinimumFontSize(size);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setMinimumFontSize(size);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setMinimumFontSize(size);
+//        }
         return this;
     }
 
@@ -666,9 +667,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getMinimumFontSize();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getMinimumFontSize();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getMinimumFontSize();
+//        }
         return 0;
     }
 
@@ -691,9 +692,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setBlockNetworkImage(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setBlockNetworkImage(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setBlockNetworkImage(flag);
+//        }
         return this;
     }
 
@@ -707,9 +708,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getBlockNetworkImage();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getBlockNetworkImage();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getBlockNetworkImage();
+//        }
         return false;
     }
 
@@ -734,9 +735,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setBlockNetworkLoads(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setBlockNetworkLoads(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setBlockNetworkLoads(flag);
+//        }
         return this;
     }
 
@@ -750,9 +751,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getBlockNetworkLoads();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getBlockNetworkLoads();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getBlockNetworkLoads();
+//        }
         return false;
     }
 
@@ -767,9 +768,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setJavaScriptEnabled(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setJavaScriptEnabled(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setJavaScriptEnabled(flag);
+//        }
         return this;
     }
 
@@ -798,9 +799,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAllowUniversalAccessFromFileURLs(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAllowUniversalAccessFromFileURLs(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAllowUniversalAccessFromFileURLs(flag);
+//        }
         return this;
     }
 
@@ -815,9 +816,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAllowFileAccessFromFileURLs(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAllowFileAccessFromFileURLs(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAllowFileAccessFromFileURLs(flag);
+//        }
         return this;
     }
 
@@ -829,9 +830,9 @@ public class WebSettingsWrapper {
                 srcWebSettings.setPluginState(android.webkit.WebSettings.PluginState.OFF);
             }
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setPluginsEnabled(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setPluginsEnabled(flag);
+//        }
         return this;
     }
 
@@ -853,9 +854,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setDatabasePath(databasePath);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setDatabasePath(databasePath);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setDatabasePath(databasePath);
+//        }
         return this;
     }
 
@@ -872,9 +873,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAppCacheEnabled(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAppCacheEnabled(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAppCacheEnabled(flag);
+//        }
         return this;
     }
 
@@ -893,9 +894,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAppCachePath(appCachePath);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAppCachePath(appCachePath);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAppCachePath(appCachePath);
+//        }
         return this;
     }
 
@@ -916,9 +917,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setAppCacheMaxSize(appCacheMaxSize);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setAppCacheMaxSize(appCacheMaxSize);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setAppCacheMaxSize(appCacheMaxSize);
+//        }
         return this;
     }
 
@@ -939,9 +940,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setDatabaseEnabled(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setDatabaseEnabled(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setDatabaseEnabled(flag);
+//        }
         return this;
     }
 
@@ -955,9 +956,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setDomStorageEnabled(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setDomStorageEnabled(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setDomStorageEnabled(flag);
+//        }
         return this;
     }
 
@@ -965,9 +966,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getDomStorageEnabled();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getDomStorageEnabled();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getDomStorageEnabled();
+//        }
         return false;
     }
 
@@ -975,9 +976,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getDatabasePath();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getDatabasePath();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getDatabasePath();
+//        }
         return "";
     }
 
@@ -985,9 +986,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getDatabaseEnabled();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getDatabaseEnabled();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getDatabaseEnabled();
+//        }
         return false;
     }
 
@@ -995,9 +996,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getJavaScriptEnabled();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getJavaScriptEnabled();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getJavaScriptEnabled();
+//        }
         return false;
     }
 
@@ -1011,9 +1012,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setJavaScriptCanOpenWindowsAutomatically(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setJavaScriptCanOpenWindowsAutomatically(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setJavaScriptCanOpenWindowsAutomatically(flag);
+//        }
         return this;
     }
 
@@ -1021,9 +1022,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getJavaScriptCanOpenWindowsAutomatically();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getJavaScriptCanOpenWindowsAutomatically();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getJavaScriptCanOpenWindowsAutomatically();
+//        }
         return false;
     }
 
@@ -1031,9 +1032,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setDefaultTextEncodingName(encoding);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setDefaultTextEncodingName(encoding);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setDefaultTextEncodingName(encoding);
+//        }
         return this;
     }
 
@@ -1041,9 +1042,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getMediaPlaybackRequiresUserGesture();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getMediaPlaybackRequiresUserGesture();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getMediaPlaybackRequiresUserGesture();
+//        }
         return false;
     }
 
@@ -1051,9 +1052,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setMediaPlaybackRequiresUserGesture(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setMediaPlaybackRequiresUserGesture(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setMediaPlaybackRequiresUserGesture(flag);
+//        }
         return this;
     }
 
@@ -1061,9 +1062,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setNeedInitialFocus(flag);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setNeedInitialFocus(flag);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setNeedInitialFocus(flag);
+//        }
         return this;
     }
 
@@ -1071,9 +1072,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             srcWebSettings.setCacheMode(mode);
         }
-        if (x5WebSettings != null) {
-            x5WebSettings.setCacheMode(mode);
-        }
+//        if (x5WebSettings != null) {
+//            x5WebSettings.setCacheMode(mode);
+//        }
         return this;
     }
 
@@ -1081,9 +1082,9 @@ public class WebSettingsWrapper {
         if (srcWebSettings != null) {
             return srcWebSettings.getCacheMode();
         }
-        if (x5WebSettings != null) {
-            return x5WebSettings.getCacheMode();
-        }
+//        if (x5WebSettings != null) {
+//            return x5WebSettings.getCacheMode();
+//        }
         return 0;
     }
 

@@ -46,6 +46,7 @@ open class ASrcWebViewClient : WebViewClient() {
      */
     @Deprecated(
         "Use {@link #shouldOverrideUrlLoading(WebView, WebResourceRequest)shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead."
+        , replaceWith = ReplaceWith("shouldOverrideUrlLoading()","webview","CommonWebResourceRequest")
     )
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         return if (mWebViewClientListener != null) {

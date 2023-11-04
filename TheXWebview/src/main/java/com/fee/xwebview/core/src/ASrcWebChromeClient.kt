@@ -2,6 +2,7 @@ package com.fee.xwebview.core.src
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Message
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
@@ -245,5 +246,17 @@ open class ASrcWebChromeClient : WebChromeClient() {
         } catch (ex: Exception) {
         }
         chromeClient?.onHideCustomView()//一般需要外部 恢复 屏幕方向
+    }
+
+    override fun onCreateWindow(
+        view: WebView?,
+        isDialog: Boolean,
+        isUserGesture: Boolean,
+        resultMsg: Message?
+    ): Boolean {
+        chromeClient?.let {
+
+        }
+        return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
     }
 }

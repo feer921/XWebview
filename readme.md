@@ -7,6 +7,10 @@
 implementation 'io.github.feer921:XWebview:1.0'
 ```
 
+# 如果不需要X5的浏览器内核，则可以依赖下面的版本,用法不用改变
+```groovy
+implementation 'io.github.feer921:XWebview:1.1-srcWebview'
+```
 
 
 ## 初始化组件,使用框架内的　**XWebViewHelper**
